@@ -740,16 +740,16 @@ class Index:
                 <code>'term with spaces'</code>""",
             plugins.FieldsPlugin: """
                 By using a search like <code>fieldname:term</code>,
-                you can search in the following fields:<br />%s""" % fields_doc,
+                you can search in the following fields:<br>%s""" % fields_doc,
             plugins.PrefixPlugin: """
                 End a term with an asterisk to search by prefix like this: <code>path:/fschulze/*</code>""",
             plugins.GroupPlugin: """
                 Group query clauses with parentheses.""",
             plugins.OperatorsPlugin: """
                 Use the <code>AND</code>, <code>OR</code>,
-                <code>ANDNOT</code>, <code>ANDMAYBE</code>, and <code>NOT</code><br />
-                operators to further refine your search.<br />
-                Write them in all capital letters, otherwise they will be interpreted as search terms.<br />
+                <code>ANDNOT</code>, <code>ANDMAYBE</code>, and <code>NOT</code><br>
+                operators to further refine your search.<br>
+                Write them in all capital letters, otherwise they will be interpreted as search terms.<br>
                 An example search would be: <code>devpi ANDNOT client</code>""",
             plugins.BoostPlugin: """
                 Boost a term by adding a circumflex followed by the boost value like this:
@@ -866,7 +866,7 @@ class Index:
         for plugin in self._query_parser_plugins():
             if plugin.__class__ not in query_parser_help:
                 result.append(
-                    "Undocumented query plugin '%s'.<br />%s" % (
+                    "Undocumented query plugin '%s'.<br>%s" % (
                         plugin.__class__.__name__, plugin.__doc__))
                 continue
             docs = query_parser_help[plugin.__class__]
