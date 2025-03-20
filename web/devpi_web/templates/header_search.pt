@@ -1,4 +1,4 @@
 <form method="get" class="search" action="${request.route_url('search')}">
-    <input type="search" name="query" autofocus tal:attributes="value query|None" />
-    <input type="submit" value="Search" />
+    <input type="search" name="query" autofocus tal:attributes="value query|None">
+    <input type="submit" value="Search">
 </form>
