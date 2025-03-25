@@ -8,7 +8,7 @@
         ${user_description}
     </dd>
     <dd>
-        <ul>
+        <ul tal:condition="indexes">
             <li tal:repeat="index indexes">
                 <a tal:attributes="title index.index_description" href="${index.url}">
                     ${user_name}/${index.index_name} <span tal:condition="index.index_title">${index.index_title}</span>
