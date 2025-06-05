@@ -8,7 +8,7 @@ import os
 @macro_config(
     template='templates/blocked_indexes.pt',
     groups=(
-        GroupDef('project', after='subnavigation'),
+        GroupDef('project'),
         GroupDef('version', after='version_metadata')))
 def blocked_indexes(request):  # noqa: ARG001
     return dict()
@@ -100,7 +100,7 @@ def index_description(request):  # noqa: ARG001
 
 @macro_config(
     template='templates/index_packages.pt',
-    groups=GroupDef('index', after='subnavigation'))
+    groups=GroupDef('index'))
 def index_packages(request):  # noqa: ARG001
     return dict()
 
