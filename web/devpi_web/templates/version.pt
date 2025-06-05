@@ -1,7 +1,11 @@
 <metal:block use-macro="main_template" tal:define="main_class 'version'">
     <metal:title fill-slot="title">${title}</metal:title>
     <metal:content fill-slot="content">
-        <metal:macros tal:repeat="name request.registry['macros'].get_group('version')" use-macro="macros[name]" />
+        <div class="content_header">
+            <metal:macros tal:repeat="name request.registry['macros'].get_group('version_header')" use-macro="macros[name]" />
+        </div>
+        <div class="content">
+            <metal:macros tal:repeat="name request.registry['macros'].get_group('version')" use-macro="macros[name]" />
+        </div>
     </metal:content>
 </metal:block>
-

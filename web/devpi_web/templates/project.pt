@@ -1,6 +1,11 @@
 <metal:block use-macro="main_template" tal:define="main_class 'project'">
     <metal:title fill-slot="title">devpi - ${title}</metal:title>
     <metal:content fill-slot="content">
-        <metal:macros tal:repeat="name request.registry['macros'].get_group('project')" use-macro="macros[name]" />
+        <div class="content_header">
+            <metal:macros tal:repeat="name request.registry['macros'].get_group('project_header')" use-macro="macros[name]" />
+        </div>
+        <div class="content">
+            <metal:macros tal:repeat="name request.registry['macros'].get_group('project')" use-macro="macros[name]" />
+        </div>
     </metal:content>
 </metal:block>

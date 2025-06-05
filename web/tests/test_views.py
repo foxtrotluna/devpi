@@ -63,27 +63,33 @@ def test_macros(dummyrequest, pyramidconfig):
     assert macros.get_group("user") == [
         "user_index_list",
     ]
-    assert macros.get_group("index") == [
+    assert macros.get_group("index_header") ] [
         "title",
         "subnavigation",
+    ]
+    assert macros.get_group("index") == [
         "index_packages",
         "index_description",
         "index_permissions",
         "index_bases",
         "index_whitelist",
     ]
-    assert macros.get_group("project") == [
+    assert macros.get_group("project_header") == [
         "title",
         "subnavigation",
+    ]
+    assert macros.get_group("project") == [
         "blocked_indexes",
         "project_refresh",
         "project_latest_version",
         "project_versions",
     ]
-    assert macros.get_group("version") == [
+    assert macros.get_group("version_header") == [
         "title",
         "subnavigation",
         "version_summary",
+    ]
+    assert macros.get_group("version") == [
         "version_metadata",
         "blocked_indexes",
         "version_files",
