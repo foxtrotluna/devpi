@@ -3,6 +3,6 @@
     <metal:macros use-macro="macros.render_group('main_footer')" />
     <metal:footerend define-slot="footerend" />
     <a class="jumptotop" href="#body" title="Jump to top of page">
-        <img src="${request.static_url('devpi_web:static/uparrow.svg')}" title="jump to top" height="60">
+        Jump to Top
     </a>
 </footer>
