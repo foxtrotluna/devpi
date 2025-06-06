@@ -1,36 +1,46 @@
 <metal:block use-macro="main_template" tal:define="main_class 'toxresult'">
     <metal:title fill-slot="title">devpi - ${title}</metal:title>
     <metal:content fill-slot="content">
-        <h1>${title}</h1>
-
-        <details tal:repeat="toxresult toxresults"
-             tal:attributes="class 'toxresult %s' % toxresult.status">
-            <summary class="toxresult_title" id="${toxresult._key}">
-                ${toxresult.host} ${toxresult.platform} ${toxresult.envname} ${toxresult.get('pyversion')}
-            </summary>
-            <a name="${toxresult._key}-setup"></a>
-            <div class="command" tal:condition="not toxresult.setup.commands">No setup performed</div>
-            <div
-                tal:condition="toxresult.setup.commands"
-                tal:repeat="command toxresult.setup.commands"
-                tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')"
-                id="${toxresult._key}-setup">
-                <details>
-                    <summary>Setup <code>${command.command}</code></summary>
-                    <pre>${command.output}</pre>
+        <div class="content_header">
+            <h1>${title}</h1>
+        </div>
+        <div class="content">
+            <h2>Toxresults</h2>
+            <hr>
+            <div class="toxresult_list">
+                <details tal:repeat="toxresult toxresults"
+                    tal:attributes="class 'toxresult %s' % toxresult.status">
+                    <summary class="toxresult_title" id="${toxresult._key}">
+                        <span>${toxresult.status}</span>
+                        ${toxresult.host} ${toxresult.platform} ${toxresult.envname} ${toxresult.get('pyversion')}
+                    </summary>
+                    <div class="result">
+                        <a name="${toxresult._key}-setup"></a>
+                        <div class="command" tal:condition="not toxresult.setup.commands">No setup performed</div>
+                        <div
+                            tal:condition="toxresult.setup.commands"
+                            tal:repeat="command toxresult.setup.commands"
+                            tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')"
+                            id="${toxresult._key}-setup">
+                            <details>
+                                <summary>Setup <code>${command.command}</code></summary>
+                                <pre>${command.output}</pre>
+                            </details>
+                        </div>
+                        <a name="${toxresult._key}-test"></a>
+                        <div class="command" tal:condition="not toxresult.test.commands">No test run</div>
+                        <div
+                            tal:condition="toxresult.test.commands"
+                            tal:repeat="command toxresult.test.commands"
+                            tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')">
+                            <details>
+                                <summary>Command <code>${command.command}</code></summary>
+                                <pre>${command.output}</pre>
+                            </details>
+                        </div>
+                    </div>
                 </details>
             </div>
-            <a name="${toxresult._key}-test"></a>
-            <div class="command" tal:condition="not toxresult.test.commands">No test run</div>
-            <div
-                tal:condition="toxresult.test.commands"
-                tal:repeat="command toxresult.test.commands"
-                tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')">
-                <details>
-                    <summary>Command <code>${command.command}</code></summary>
-                    <pre>${command.output}</pre>
-                </details>
-            </div>
-        </details>
+        </div>
     </metal:content>
 </metal:block>

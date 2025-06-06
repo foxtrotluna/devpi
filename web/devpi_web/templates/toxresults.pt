@@ -1,41 +1,44 @@
 <metal:block use-macro="main_template" tal:define="main_class 'toxresults'">
     <metal:title fill-slot="title">devpi - ${title}</metal:title>
     <metal:content fill-slot="content">
-        <h1>${title}</h1>
-
-        <table class="main toxresults">
-            <caption>Toxresults</caption>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Host</th>
-                    <th>Platform</th>
-                    <th>Environment</th>
-                    <th>Python Version</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr tal:repeat="toxresult toxresults">
-                    <td>${toxresult.basename}</td>
-                    <td>${toxresult.host}</td>
-                    <td>${toxresult.platform}</td>
-                    <td>${toxresult.envname}</td>
-                    <td>${toxresult.get('pyversion')}</td>
-                    <td>
-                        <a href="${make_toxresult_url(toxresult=toxresult.basename, _anchor='%s-setup' % toxresult._key)}" tal:attributes="class 'failed' if toxresult.setup.failed else 'passed'">
-                            <tal:nosetup condition="not toxresult.setup.commands">No setup performed</tal:nosetup>
-                            <tal:setup condition="toxresult.setup.commands and toxresult.setup.failed">Setup failed</tal:setup>
-                            <tal:setup condition="toxresult.setup.commands and not toxresult.setup.failed">Setup succeeded</tal:setup>
-                        </a>
-                        <a href="${make_toxresult_url(toxresult=toxresult.basename, _anchor='%s-test' % toxresult._key)}" tal:attributes="class 'failed' if toxresult.test.failed else 'passed'">
-                            <tal:notest condition="not toxresult.test.commands">No test run</tal:notest>
-                            <tal:test condition="toxresult.test.commands and toxresult.test.failed">Tests failed</tal:test>
-                            <tal:test condition="toxresult.test.commands and not toxresult.test.failed">Tests passed</tal:test>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="content_header">
+            <h1>${title}</h1>
+        </div>
+        <div class="content">
+            <table class="main toxresults">
+                <caption>Toxresults</caption>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Host</th>
+                        <th>Platform</th>
+                        <th>Environment</th>
+                        <th>Python Version</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="toxresult toxresults">
+                        <td>${toxresult.basename}</td>
+                        <td>${toxresult.host}</td>
+                        <td>${toxresult.platform}</td>
+                        <td>${toxresult.envname}</td>
+                        <td>${toxresult.get('pyversion')}</td>
+                        <td>
+                            <a href="${make_toxresult_url(toxresult=toxresult.basename, _anchor='%s-setup' % toxresult._key)}" tal:attributes="class 'failed' if toxresult.setup.failed else 'passed'">
+                                <tal:nosetup condition="not toxresult.setup.commands">No setup performed</tal:nosetup>
+                                <tal:setup condition="toxresult.setup.commands and toxresult.setup.failed">Setup failed</tal:setup>
+                                <tal:setup condition="toxresult.setup.commands and not toxresult.setup.failed">Setup succeeded</tal:setup>
+                            </a>
+                            <a href="${make_toxresult_url(toxresult=toxresult.basename, _anchor='%s-test' % toxresult._key)}" tal:attributes="class 'failed' if toxresult.test.failed else 'passed'">
+                                <tal:notest condition="not toxresult.test.commands">No test run</tal:notest>
+                                <tal:test condition="toxresult.test.commands and toxresult.test.failed">Tests failed</tal:test>
+                                <tal:test condition="toxresult.test.commands and not toxresult.test.failed">Tests passed</tal:test>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </metal:content>
 </metal:block>
