@@ -1,112 +1,115 @@
 <metal:block use-macro="main_template" tal:define="main_class 'status'">
     <metal:title fill-slot="title">devpi - Status</metal:title>
     <metal:content fill-slot="content">
-        <h1>Status</h1>
-
-        <tal:msgs condition="msgs">
-            <h2>Status messages</h2>
-            <ul>
-                <li tal:repeat="msg msgs">
-                    <span tal:condition="msg.status == 'warn'">Warning:</span>
-                    <span tal:condition="msg.status == 'fatal'">Error:</span>
-                    ${msg.msg}
-                </li>
-            </ul>
-        </tal:msgs>
-        <h2>Info</h2>
-        <table class="main status">
-            <caption>Server Status</caption>
-            <tbody>
-                <tr class="odd">
-                    <th>UUID</th>
-                    <td>${info.uuid}</td>
-                </tr>
-                <tr class="even">
-                    <th>Outside URL</th>
-                    <td><a tal:omit-tag="not info.outside_url" href="${info.outside_url}">${info.outside_url}</a></td>
-                </tr>
-                <tr class="odd">
-                    <th>Role</th>
-                    <td>${info.role}</td>
-                </tr>
-                <tal:masterurl condition="info.master_url">
-                    <tr class="even">
-                        <th>Master URL</th>
-                        <td><a href="${info.master_url}">${info.master_url}</a></td>
-                    </tr>
+        <div class="content_header">
+            <h1 class="title">Status</h1>
+        </div>
+        <div class="content">
+            <tal:msgs condition="msgs">
+                <h2>Status messages</h2>
+                <ul>
+                    <li tal:repeat="msg msgs">
+                        <span tal:condition="msg.status == 'warn'">Warning:</span>
+                        <span tal:condition="msg.status == 'fatal'">Error:</span>
+                        ${msg.msg}
+                    </li>
+                </ul>
+            </tal:msgs>
+            <h2>Info</h2>
+            <table class="main status">
+                <caption>Server Status</caption>
+                <tbody>
                     <tr class="odd">
-                        <th>Master UUID</th>
-                        <td>${info.master_uuid}</td>
+                        <th>UUID</th>
+                        <td>${info.uuid}</td>
                     </tr>
                     <tr class="even">
-                        <th>Replica started</th>
-                        <td><span class="timestamp">${info.replica_started_at}</span></td>
+                        <th>Outside URL</th>
+                        <td><a tal:omit-tag="not info.outside_url" href="${info.outside_url}">${info.outside_url}</a></td>
                     </tr>
                     <tr class="odd">
-                        <th>Master serial</th>
+                        <th>Role</th>
+                        <td>${info.role}</td>
+                    </tr>
+                    <tal:masterurl condition="info.master_url">
+                        <tr class="even">
+                            <th>Master URL</th>
+                            <td><a href="${info.master_url}">${info.master_url}</a></td>
+                        </tr>
+                        <tr class="odd">
+                            <th>Master UUID</th>
+                            <td>${info.master_uuid}</td>
+                        </tr>
+                        <tr class="even">
+                            <th>Replica started</th>
+                            <td><span class="timestamp">${info.replica_started_at}</span></td>
+                        </tr>
+                        <tr class="odd">
+                            <th>Master serial</th>
+                            <td>
+                                ${info.master_serial}<br>
+                                last time changed <span class="timestamp">${info.master_serial_timestamp}</span><br>
+                                last in sync <span class="timestamp">${info.replica_in_sync_at}</span><br>
+                                last update from master <span class="timestamp">${info.update_from_master_at}</span>
+                            </td>
+                        </tr>
+                    </tal:masterurl>
+                    <tr class="even">
+                        <th>Current serial</th>
                         <td>
-                            ${info.master_serial}<br>
-                            last time changed <span class="timestamp">${info.master_serial_timestamp}</span><br>
-                            last in sync <span class="timestamp">${info.replica_in_sync_at}</span><br>
-                            last update from master <span class="timestamp">${info.update_from_master_at}</span>
+                            ${info.serial}<br>
+                            last time changed <span class="timestamp">${info.last_commit_timestamp}</span><br>
                         </td>
                     </tr>
-                </tal:masterurl>
-                <tr class="even">
-                    <th>Current serial</th>
-                    <td>
-                        ${info.serial}<br>
-                        last time changed <span class="timestamp">${info.last_commit_timestamp}</span><br>
-                    </td>
-                </tr>
-                <tr class="odd">
-                    <th>Processed events serial</th>
-                    <td>
-                        ${info.event_serial}<br>
-                        last time processed <span class="timestamp">${info.event_serial_timestamp}</span><br>
-                        last in sync <span class="timestamp">${info.event_serial_in_sync_at}</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <tal:replicationerrors condition="replication_errors">
-            <h2>Replication errors</h2>
-            <ul>
-                <li tal:repeat="error replication_errors">
-                    <span tal:replace="error.get('relpath', '')" />
-                    ${error.message}
-                </li>
-            </ul>
-        </tal:replicationerrors>
-        <tal:pollingreplicas condition="polling_replicas">
-            <h2>Polling replicas</h2>
-            <tal:replica repeat="replica polling_replicas">
-                <table class="main status">
-                    <caption>${replica.uuid}</caption>
-                    <tbody>
-                        <tr class="odd">
-                            <th>Remote IP</th>
-                            <td>${replica.remote_ip}</td>
-                        </tr>
-                        <tr class="even">
-                            <th>Outside URL</th>
-                            <td><a tal:omit-tag="not replica.outside_url" href="${replica.outside_url}">${replica.outside_url}</a></td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Serial</th>
-                            <td>${replica.serial}</td>
-                        </tr>
-                        <tr class="even">
-                            <th>In request</th>
-                            <td>${replica.in_request}</td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Last request</th>
-                            <td class="timestamp">${replica.last_request}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </tal:replica>
-        </tal:pollingreplicas>
+                    <tr class="odd">
+                        <th>Processed events serial</th>
+                        <td>
+                            ${info.event_serial}<br>
+                            last time processed <span class="timestamp">${info.event_serial_timestamp}</span><br>
+                            last in sync <span class="timestamp">${info.event_serial_in_sync_at}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <tal:replicationerrors condition="replication_errors">
+                <h2>Replication errors</h2>
+                <ul>
+                    <li tal:repeat="error replication_errors">
+                        <span tal:replace="error.get('relpath', '')" />
+                        ${error.message}
+                    </li>
+                </ul>
+            </tal:replicationerrors>
+            <tal:pollingreplicas condition="polling_replicas">
+                <h2>Polling replicas</h2>
+                <tal:replica repeat="replica polling_replicas">
+                    <table class="main status">
+                        <caption>${replica.uuid}</caption>
+                        <tbody>
+                            <tr class="odd">
+                                <th>Remote IP</th>
+                                <td>${replica.remote_ip}</td>
+                            </tr>
+                            <tr class="even">
+                                <th>Outside URL</th>
+                                <td><a tal:omit-tag="not replica.outside_url" href="${replica.outside_url}">${replica.outside_url}</a></td>
+                            </tr>
+                            <tr class="odd">
+                                <th>Serial</th>
+                                <td>${replica.serial}</td>
+                            </tr>
+                            <tr class="even">
+                                <th>In request</th>
+                                <td>${replica.in_request}</td>
+                            </tr>
+                            <tr class="odd">
+                                <th>Last request</th>
+                                <td class="timestamp">${replica.last_request}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tal:replica>
+            </tal:pollingreplicas>
+        </div>
     </metal:content>
 </metal:block>
