@@ -9,7 +9,7 @@ furo
 beautifulsoup4 != 4.12.1
 certauth
 execnet
-match-diff-lines; python_version >= '3.9'
+match-diff-lines; python_version >= '3.13'
 mr.laforge
 mock
 mypy
