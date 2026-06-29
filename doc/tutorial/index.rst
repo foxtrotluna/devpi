@@ -7,3 +7,4 @@ Lorem Ipsum
 
   using-devpi
   installing-server
+  running-pypi-mirror
